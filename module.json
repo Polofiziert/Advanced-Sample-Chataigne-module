@@ -1,0 +1,60 @@
+{
+  "name": "Advanced Example",
+  "type": "OSC",
+  "path": "Examples",
+  "version": "1.0.0",
+  "description": "A multi-script starter demonstrating Chataigne lifecycle, module state, and OSC routing.",
+  "hasInput": true,
+  "hasOutput": false,
+  "hideDefaultCommands": true,
+  "defaults": {
+    "OSC Input": {
+      "enabled": false
+    }
+  },
+  "scripts": [
+    "01_lifecycle.js",
+    "02_parameters.js",
+    "03_values.js",
+    "04_osc.js",
+    "05_osc_router.js"
+  ],
+  "parameters": {
+    "Example Enabled": {
+      "type": "Boolean",
+      "default": true,
+      "description": "Allow the example OSC route to update module state."
+    },
+    "Device label": {
+      "type": "String",
+      "default": "Example device",
+      "description": "Included in the status message published by the OSC handler."
+    },
+    "Log OSC details": {
+      "type": "Boolean",
+      "default": true,
+      "description": "Log details for OSC messages handled by the example route."
+    }
+  },
+  "values": {
+    "Status": {
+      "type": "String",
+      "default": "Ready",
+      "readOnly": true,
+      "description": "A short status published by the example OSC route."
+    },
+    "Last OSC address": {
+      "type": "String",
+      "default": "None",
+      "readOnly": true,
+      "description": "The last matching OSC address handled by this module."
+    },
+    "Message count": {
+      "type": "Integer",
+      "default": 0,
+      "min": 0,
+      "readOnly": true,
+      "description": "Number of matching OSC messages handled since module load."
+    }
+  }
+}
