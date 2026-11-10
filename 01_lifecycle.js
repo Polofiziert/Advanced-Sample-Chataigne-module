@@ -23,6 +23,13 @@ function init() {
     "Log a heartbeat every 10 seconds to demonstrate update().",
     false
   );
+
+  script.getParent().getParent().parameters.addTrigger("Module Parameter from getChild()", "Shows in the top of the Module with Parameters from module.json");
+  root.modules.advancedExample.parameters.addTrigger("Module Parameter from root", "Shows in the bottom of the Module, in the Container of each Script. You can get this path from an right-click at any parameter or value in the Chataigne UI");
+  local.parameters.addTrigger("Module Parameter from local", "Shows in the bottom of the Module, in the Container of each Script.");
+  
+  script.addTrigger("Script Parameter", "Shows in the bottom of the Module, in the Container of each Script.");
+  
   script.setUpdateRate(1);
   script.log("[01_lifecycle.js] update() is scheduled at 1 Hz; heartbeat is off by default.");
 }
