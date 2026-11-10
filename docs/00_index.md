@@ -8,7 +8,7 @@ Example module.
 Chataigne's script APIs and protocol behavior can vary between releases.
 Treat version-specific details as guidance, then verify them in the target
 application and its generated script templates. The [official Chataigne
-documentation](https://benjamin.kuperberg.fr/chataigne/docs) and [public
+documentation](https://benjamin.kuperberg.fr/chataigne/docs), [making your own Modules](https://benkuper.notion.site/Making-your-own-Module-f892f4150bc74dc1b851ba1a3c99510d), [Scripting Reference](https://benkuper.notion.site/Scripting-Reference-fd21dfa6149b4b46b4f44e7dbc22f2af#a09340486305476a84bb5c55240a93fe), [Simpel Sample Chataigne Module](https://github.com/tommag/Sample-Chataigne-module) and [public
 source repository](https://github.com/benkuper/Chataigne) are useful references
 for updates.
 
