@@ -73,9 +73,10 @@ observer read-only unless you deliberately manage update origins; otherwise a
 send/set feedback loop is easy to create. The example's observer only logs.
 
 The API and callback names can vary by Chataigne version. Check the script
-editor's generated template and test in the target application. See the local
-[script API notes](../grandMA3-Chataigne-Module/Sorted_Documentation/02_script_api_reference.md)
-and [runtime observations](../grandMA3-Chataigne-Module/Sorted_Documentation/06_runtime_observations.md).
+editor's generated template and test in the target application. See the
+[script API reference](./docs/02_script_api_reference.md),
+[OSC routing guide](./docs/04_osc_routing.md), and
+[runtime notes](./docs/06_runtime_compatibility.md).
 
 ## Inspiration and development setup
 
