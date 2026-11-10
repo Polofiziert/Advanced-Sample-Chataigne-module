@@ -50,5 +50,6 @@ function handleExampleOsc(address, args) {
  * @returns {ChataigneParameter} The current value object.
  */
 function getModuleValue(name) {
-  return local.getChild("Values").getChild(name);
+  var values = /** @type {ChataigneContainer} */ (local.getChild("Values"));
+  return /** @type {ChataigneParameter} */ (values.getChild(name));
 }
