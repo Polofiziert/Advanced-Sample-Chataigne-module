@@ -448,3 +448,45 @@ declare var script: ChataigneScriptHost;
 declare var local: ChataigneModuleHost;
 /** Root object for the current Chataigne session. */
 declare var root: ChataigneRootHost;
+
+/**
+ * Receives OSC messages through the module's protocol callback.
+ *
+ * @param {string} address The received OSC address.
+ * @param {any[]} args The OSC arguments.
+ * @param {string} originIp The sender's IP address.
+ * @return {void}
+ */
+declare function oscEvent(address: string, args: any[], originIp: string): void;
+
+/**
+ * Observes module value changes without sending them back to the device.
+ *
+ * A value.set() performed by another script can invoke this callback too.
+ * Keeping this callback read-only avoids accidental send/set feedback loops.
+ *
+ * @param {ChataigneParameter} value The changed module value or trigger.
+ */
+declare function moduleValueChanged(value: ChataigneParameter): void;
+
+/**
+ * Called when a parameter or trigger in the module's Parameters panel changes.
+ *
+ * @param {ChataigneParameter} param The changed module parameter or trigger.
+ */
+function moduleParameterChanged(param: ChataigneParameter): void;
+
+/**
+ * Initializes this script and demonstrates the script host API.
+ *
+ * Chataigne calls init() once for this script. The parameter belongs to this
+ * script, not to the module's shared Parameters panel.
+ */
+function init(): void;
+
+/**
+ * Runs at the update rate configured in init().
+ *
+ * @param {number} deltaTime Elapsed time since the previous update, in seconds.
+ */
+function update(deltaTime: number): void;
