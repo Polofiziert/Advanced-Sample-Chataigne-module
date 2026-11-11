@@ -94,3 +94,6 @@ are development aids and are not loaded by Chataigne.
 - `npm run typecheck` checks the scripts against the local host declarations.
 - `npm test` runs a Node smoke test with isolated script contexts and a shared
   mock module host. It is not a substitute for testing in Chataigne.
+
+## Chataigne Versio
+This Example was written with the Chataigne Version 1.10.4 from 2026. Check the compatability with your Version! Things can change.
