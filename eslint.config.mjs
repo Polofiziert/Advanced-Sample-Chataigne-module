@@ -6,7 +6,8 @@ export default [
       sourceType: "script",
       globals: {
         local: "readonly",
-        script: "readonly"
+        script: "readonly",
+        util: "readonly"
       }
     },
     rules: {

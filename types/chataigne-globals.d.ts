@@ -115,6 +115,7 @@ interface ChataigneTrigger extends ChataigneControllable {
   trigger(): void;
 }
 
+/** A child that can be added to or retrieved from a Chataigne container. */
 type ChataigneChild = ChataigneParameter | ChataigneTrigger | ChataigneContainer;
 
 /** A Chataigne object that can contain controls and nested containers. */
@@ -390,11 +391,13 @@ interface ChataigneScriptContainer extends ChataigneContainer {
 
 /** Container of script-owned parameters, also accessible by script name. */
 interface ChataigneScriptParameters extends ChataigneContainer {
+  /** Script-owned parameter addressable by its script name. */
   [name: string]: any;
 }
 
 /** Module Parameters or Values container, also accessible by script name. */
 interface ChataigneModuleParameters extends ChataigneContainer {
+  /** Module parameter or value addressable by its script name. */
   [name: string]: any;
 }
 
@@ -448,6 +451,283 @@ declare var script: ChataigneScriptHost;
 declare var local: ChataigneModuleHost;
 /** Root object for the current Chataigne session. */
 declare var root: ChataigneRootHost;
+
+/** Fields observed on the Chataigne 1.10.4 getOSInfos() result. */
+interface ChataigneOSInfo {
+  /** Operating-system name. */
+  name: string;
+  /** Numeric operating-system type code. */
+  type: number;
+  /** Name of the host computer. */
+  computerName: string;
+  /** Host operating-system language. */
+  language: string;
+  /** Name of the current operating-system user. */
+  username: string;
+}
+
+/** Utility host object registered by Chataigne for script API probes. */
+interface ChataigneUtilHost {
+  /**
+   * Returns the running Chataigne application version.
+   * @return {string} Application version.
+   */
+  getAppVersion(): string;
+  /**
+   * Lists host methods when supported by the supplied object.
+   * Chataigne 1.10.4 returned void for the OS-info object.
+   * @param {object} object Host object to inspect.
+   * @return {string[]|void} Method names, or void when unavailable.
+   */
+  getObjectMethods(object: object): string[] | void;
+  /**
+   * Lists host property names. On Chataigne 1.10.4, some flag combinations
+   * returned void; the Boolean filtering behavior is not fully established.
+   * @param {object} object Host object to inspect.
+   * @param {boolean} [includeParameters] Whether to include parameter properties.
+   * @param {boolean} [includeObjects] Whether to include object properties.
+   * @return {string[]|void} Property names, or void for unsupported combinations.
+   */
+  getObjectProperties(
+    object: object,
+    includeParameters?: boolean,
+    includeObjects?: boolean
+  ): string[] | void;
+  /**
+   * Returns elapsed system time in seconds.
+   * @return {number} Elapsed time; the clock origin is unspecified.
+   */
+  getTime(): number;
+  /**
+   * Returns the current Unix timestamp in seconds.
+   * @return {number} Unix timestamp.
+   */
+  getTimestamp(): number;
+  /**
+   * Delays the calling script thread for the requested duration.
+   * @param {number} milliseconds Delay duration in milliseconds.
+   * @return {number} Host return value; observed as a number in Chataigne 1.10.4.
+   */
+  delayThreadMS(milliseconds: number): number;
+  /**
+   * Decodes four bytes as an IEEE-754 single-precision value.
+   * Tested Chataigne 1.10.4 results use little-endian byte order.
+   * @param {number} byte1 First byte.
+   * @param {number} byte2 Second byte.
+   * @param {number} byte3 Third byte.
+   * @param {number} byte4 Fourth byte.
+   * @return {number} Decoded floating-point value.
+   */
+  getFloatFromBytes(byte1: number, byte2: number, byte3: number, byte4: number): number;
+  /**
+   * Decodes four bytes as a 32-bit integer.
+   * Tested Chataigne 1.10.4 results use little-endian byte order.
+   * @param {number} byte1 First byte.
+   * @param {number} byte2 Second byte.
+   * @param {number} byte3 Third byte.
+   * @param {number} byte4 Fourth byte.
+   * @return {number} Decoded integer.
+   */
+  getInt32FromBytes(byte1: number, byte2: number, byte3: number, byte4: number): number;
+  /**
+   * Returns a number, but the tested 1.10.4 binding behaved like the int32
+   * decoder and did not demonstrate 64-bit decoding.
+   * @param {number} byte1 First byte.
+   * @param {number} byte2 Second byte.
+   * @param {number} byte3 Third byte.
+   * @param {number} byte4 Fourth byte.
+   * @param {number} byte5 Fifth byte.
+   * @param {number} byte6 Sixth byte.
+   * @param {number} byte7 Seventh byte.
+   * @param {number} byte8 Eighth byte.
+   * @return {number} Host-decoded integer; 64-bit behavior is not confirmed.
+   */
+  getInt64FromBytes(byte1: number, byte2: number, byte3: number, byte4: number, byte5: number, byte6: number, byte7: number, byte8: number): number;
+  /**
+   * Decodes eight bytes as an IEEE-754 double-precision value.
+   * Tested Chataigne 1.10.4 results use little-endian byte order.
+   * @param {number} byte1 First byte.
+   * @param {number} byte2 Second byte.
+   * @param {number} byte3 Third byte.
+   * @param {number} byte4 Fourth byte.
+   * @param {number} byte5 Fifth byte.
+   * @param {number} byte6 Sixth byte.
+   * @param {number} byte7 Seventh byte.
+   * @param {number} byte8 Eighth byte.
+   * @return {number} Decoded floating-point value.
+   */
+  getDoubleFromBytes(byte1: number, byte2: number, byte3: number, byte4: number, byte5: number, byte6: number, byte7: number, byte8: number): number;
+  /**
+   * Converts a number to a hexadecimal float byte sequence.
+   * In tested Chataigne 1.10.4 behavior, true produced big-endian output.
+   * @param {number} value Number to encode.
+   * @param {boolean} littleEndian Byte-order flag; tested behavior is opposite the name.
+   * @return {string} Hexadecimal byte sequence.
+   */
+  floatToHexSeq(value: number, littleEndian: boolean): string;
+  /**
+   * Converts a number to a hexadecimal double byte sequence.
+   * In tested Chataigne 1.10.4 behavior, true produced big-endian output.
+   * @param {number} value Number to encode.
+   * @param {boolean} littleEndian Byte-order flag; tested behavior is opposite the name.
+   * @return {string} Hexadecimal byte sequence.
+   */
+  doubleToHexSeq(value: number, littleEndian: boolean): string;
+  /**
+   * Parses a hexadecimal string as an integer.
+   * @param {string} value Hexadecimal text.
+   * @return {number} Parsed integer.
+   */
+  hexStringToInt(value: string): number;
+  /**
+   * Formats a number with a fixed number of decimal places.
+   * @param {number} value Number to format.
+   * @param {number} decimals Number of decimal places.
+   * @return {string} Formatted number.
+   */
+  toStringFixed(value: number, decimals: number): string;
+  /**
+   * Converts RGB/RGBA channel values to hexadecimal text.
+   * Tested behavior varies by call form; channel semantics are not established.
+   * @param {number[]} channels RGB or RGBA channel array.
+   * @return {string} Hexadecimal color text.
+   */
+  colorToHex(channels: number[]): string;
+  /**
+   * Converts positional RGB/RGBA channel values to hexadecimal text.
+   * Tested behavior varies by call form; channel semantics are not established.
+   * @param {number} red Red channel.
+   * @param {number} green Green channel.
+   * @param {number} blue Blue channel.
+   * @param {number} [alpha] Optional alpha channel.
+   * @return {string} Hexadecimal color text.
+   */
+  colorToHex(red: number, green: number, blue: number, alpha?: number): string;
+  /**
+   * Returns the user's Documents directory path.
+   * @return {string} Documents directory path.
+   */
+  getDocumentsDirectory(): string;
+  /**
+   * Returns the user's Desktop directory path.
+   * @return {string} Desktop directory path.
+   */
+  getDesktopDirectory(): string;
+  /**
+   * Returns the current session file's directory; observed as empty in the tested context.
+   * @return {string} Current file directory path.
+   */
+  getCurrentFileDirectory(): string;
+  /**
+   * Returns the current session file path; observed as empty in the tested context.
+   * @return {string} Current file path.
+   */
+  getCurrentFilePath(): string;
+  /**
+   * Returns the parent directory for a path accepted by the host.
+   * @param {string} path Path to resolve.
+   * @return {string|void} Parent directory, or void for some unsupported paths.
+   */
+  getParentDirectory(path: string): string | void;
+  /**
+   * Returns the final path component, optionally including its extension.
+   * @param {string} path Path to inspect.
+   * @param {boolean} [withExtension] Whether to retain the extension.
+   * @return {string|void} File name, or void for some unsupported paths.
+   */
+  getFileName(path: string, withExtension?: boolean): string | void;
+  /**
+   * Resolves a path using the host's current context.
+   * @param {string} relativePath Path to resolve.
+   * @return {string|void} Resolved path, or void for some unsupported paths.
+   */
+  getFilePath(relativePath: string): string | void;
+  /**
+   * Tests whether a path exists as a file.
+   * @param {string} path File path to test.
+   * @return {number} Numeric 0/1 result in tested Chataigne 1.10.4 behavior.
+   */
+  fileExists(path: string): number;
+  /**
+   * Tests whether a path exists as a directory.
+   * @param {string} path Directory path to test.
+   * @return {number} Numeric 0/1 result in tested Chataigne 1.10.4 behavior.
+   */
+  directoryExists(path: string): number;
+  /**
+   * Produces a candidate path that does not currently exist.
+   * @param {string} directory Directory in which to form the candidate.
+   * @param {string} fileName Requested candidate name.
+   * @return {string} Candidate path; it is not reserved or created.
+   */
+  getNonExistentFile(directory: string, fileName: string): string;
+  /**
+   * Returns operating-system metadata.
+   * @return {ChataigneOSInfo} OS information; some fields may identify the host.
+   */
+  getOSInfos(): ChataigneOSInfo;
+  /**
+   * Returns local IP addresses.
+   * @return {string[]} IP address strings; values may be network-identifying.
+   */
+  getIPs(): string[];
+  /**
+   * Reads an environment variable by name.
+   * @param {string} name Environment variable name.
+   * @return {string} Variable value; observed as empty for a missing name.
+   */
+  getEnvironmentVariable(name: string): string;
+  /**
+   * Returns the currently selected Chataigne object, if any.
+   * @return {object|null|void} Selected object or an empty-selection result.
+   */
+  getSelectedObject(): object | null | void;
+  /**
+   * Returns the number of selected Chataigne objects.
+   * @return {number} Selected-object count.
+   */
+  getSelectedObjectsCount(): number;
+  /**
+   * Encodes text as Base64.
+   * @param {string} value Text to encode.
+   * @return {string} Base64-encoded text.
+   */
+  toBase64(value: string): string;
+  /**
+   * Decodes Base64 text to a string.
+   * @param {string} value Base64-encoded text.
+   * @return {string} Decoded text.
+   */
+  fromBase64(value: string): string;
+  /**
+   * Decodes Base64 text to a byte sequence.
+   * @param {string} value Base64-encoded bytes.
+   * @return {*} Host byte-sequence representation.
+   */
+  fromBase64Bytes(value: string): any;
+  /**
+   * Computes a SHA-256 digest.
+   * @param {string} value Input text.
+   * @return {string} Digest as lowercase hexadecimal in the tested vector.
+   */
+  encodeSHA256(value: string): string;
+  /**
+   * Computes a SHA-512 digest.
+   * @param {string} value Input text.
+   * @return {string} Digest as lowercase hexadecimal in the tested vector.
+   */
+  encodeSHA512(value: string): string;
+  /**
+   * Computes an HMAC-SHA1 digest.
+   * @param {string} value Input text.
+   * @param {string} key Secret key.
+   * @return {string} Digest; tested output was Base64 encoded.
+   */
+  encodeHMAC_SHA1(value: string, key: string): string;
+}
+
+/** Utility object exposed by Chataigne to scripts. */
+declare var util: ChataigneUtilHost;
 
 /**
  * Receives OSC messages through the module's protocol callback.
