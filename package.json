@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Development tooling for the Advanced Example Chataigne module.",
   "scripts": {
-    "lint": "eslint 01_lifecycle.js 02_parameters.js 03_values.js 04_osc.js 05_osc_router.js",
+    "lint": "eslint 01_lifecycle.js 02_parameters.js 03_values.js 04_osc.js 05_osc_router.js 06_util_probes.js",
     "typecheck": "tsc --project jsconfig.json",
     "test": "node tests/runtime-smoke.js"
   },

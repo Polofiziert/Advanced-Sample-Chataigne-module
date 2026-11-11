@@ -17,7 +17,8 @@
     "02_parameters.js",
     "03_values.js",
     "04_osc.js",
-    "05_osc_router.js"
+    "05_osc_router.js",
+    "06_util_probes.js"
   ],
   "parameters": {
     "Example Enabled": {
