@@ -65,8 +65,8 @@ OSC arguments may be numbers, strings, or other OSC-supported values. Address pa
 |---|---|---|---|---|
 | `send(address, ...)` | `address: string`, one or more OSC values (`number`, `string`, etc.) | Not specified | Sends to enabled outputs configured on the module. | `local.send("/device/level", 0.5);` |
 | `sendTo(ip, port, address, ...)` | `ip: string`, `port: number`, `address: string`, one or more OSC values | Not specified | Sends directly to the given host/port, ignoring configured module outputs. | `local.sendTo("192.168.0.30", 9000, "/device/level", 0.5);` |
-| `match(address, pattern)` | `address: string`, `pattern: string` | `boolean` | Tests whether an address matches an OSC pattern. | `if (local.match("/device/level", "/device/*")) { script.log("Matched"); }` |
-| `register(pattern, callbackName)` | `pattern: string`, `callbackName: string` | Not specified | Registers a named script function for matching messages; registration can route to a handler in another module script. | `function init() { local.register("/device/*", "onDeviceMessage"); } function onDeviceMessage(address, args) { script.log(address); }` |
+| `match(address, pattern)` | `address: string`, `pattern: string` | `boolean` | Tests whether an address matches an OSC [pattern](https://opensoundcontrol.stanford.edu/spec-1_0.html#osc-message-dispatching-and-pattern-matching). | `if (local.match("/device/level", "/device/*")) { script.log("Matched"); }` `if (local.match("/device?", "/device/*")) { script.log("Matched"); }` `if (local.match("/device[0-9]", "/device/*")) { script.log("Matched"); }`|
+| `register(pattern, callbackName)` | `pattern: string`, `callbackName: string` | Not specified | Registers a named script function for [matching](https://opensoundcontrol.stanford.edu/spec-1_0.html#osc-message-dispatching-and-pattern-matching) messages; registration can route to a handler in another module script. | `function init() { local.register("/device/*", "onDeviceMessage"); } function onDeviceMessage(address, args) { script.log(address); }` |
 
 ### MIDI
 
